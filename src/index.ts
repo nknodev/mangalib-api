@@ -5,6 +5,7 @@ import qs from "querystring";
 import axios from "axios";
 import chalk from 'chalk';
 import rateLimit from 'express-rate-limit'
+import { fetch } from 'fetch-h2' // чтобы обойти cf надо юзать http2
 
 // Rate-Limit
 const seclimiter = rateLimit({
@@ -52,10 +53,8 @@ app.get("/v1/forum", (req, res) => {
 
 app.get("/v1/forum/getposts", (req, res) => {
 const page = req.query.page != null && req.query.page != "" ? req.query.page : "1"
-axios.get(`${forum_url}/api/forum/disscussion?page=${page}`, 
-{ headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36' }  } )
-	.then((dota) => {
-		var data = dota.data
+const r = fetch(`${forum_url}/api/forum/disscussion?page=${page}`)
+		var data = r.text()
   		res.send({
     			ok: true,
     			pagination: {
