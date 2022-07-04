@@ -6,6 +6,7 @@ import axios from "axios";
 import chalk from 'chalk';
 import rateLimit from 'express-rate-limit'
 import { fetch } from 'fetch-h2' // чтобы обойти cf надо юзать http2
+const http2 = require('http2')
 
 // Rate-Limit
 const seclimiter = rateLimit({
@@ -53,8 +54,8 @@ app.get("/v1/forum", (req, res) => {
 
 app.get("/v1/forum/getposts", async (req, res) => {
 const page = req.query.page != null && req.query.page != "" ? req.query.page : "1"
-const r = await fetch(`${forum_url}/api/forum/disscussion?page=${page}`)
-		var data = await r.text()
+const r = request(`${forum_url}/api/forum/disscussion?page=${page}`)
+		const data = r
   		res.send({
     			ok: true,
     			pagination: {
@@ -95,6 +96,22 @@ app.use("*", (req, res) => {
     favorite_food: "pancakeeeeks!!"
   });
 });
+
+
+// http2 function
+function request(url: str) {
+	const session = http2.connect(url)
+	const req = session.request({ ':path': '/' })
+	req.end()
+	let data = ''
+	req.on('data', (chunk) => { data += chunk })
+	req.on('end', () => {
+  		session.close()
+		return data
+	})
+}
+
+
 
 app.listen(port, () => {
   console.log("[Server] Listening on port: " + port);
