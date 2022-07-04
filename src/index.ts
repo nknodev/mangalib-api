@@ -97,12 +97,13 @@ function request(url: str) {
 	const session = http2.connect(url)
 	const req = session.request({ ':path': '/' })
 	req.end()
-	let data = ''
+	var data = ''
 	req.on('data', (chunk) => { data += chunk })
 	req.on('end', () => {
   		session.close()
-		return data
+		
 	})
+	return data
 }
 
 
