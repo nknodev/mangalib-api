@@ -58,11 +58,6 @@ const r = request(`${forum_url}/api/forum/disscussion?page=${page}`)
 		const data = r
   		res.send({
     			ok: true,
-    			pagination: {
-    				page: data.current_page,
-				posts_per_page: data.per_page
-    			},
-    			posts: data.data, 
 			dta: data
 	  
     
