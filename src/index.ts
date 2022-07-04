@@ -31,7 +31,7 @@ const api_url = "https://mangalib-api.nkno.site"
 const ml_url = "https://mangalib.me"
 const st_url = "https://staticlib.me"
 const forum_url = "https://lib.social"
-
+// важное примечание! сейчас из-за новизны сайта social он недостаточно защищен в плане апи, поэтому я буду изпользовать его при запросах к апи мангалиба
 
 
 const port = 80;
@@ -50,8 +50,8 @@ app.get("/v1/forum", (req, res) => {
   });
 });
 
-app.get("/v1/getposts", (req, res) => {
-const page = req.query.includes("page") ? req.query.page : "1"
+app.get("/v1/forum/getposts", (req, res) => {
+const page = req.query.page != null && req.query.page != "" ? req.query.page : "1"
 axios.get(`${forum_url}/api/forum/disscussion?page=${page}`)
 	.then((dota) => {
 	var data = dota.data
@@ -67,6 +67,7 @@ axios.get(`${forum_url}/api/forum/disscussion?page=${page}`)
   });
 })
 });
+
 
 
 
