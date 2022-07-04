@@ -17,7 +17,7 @@
     "nodemon": "^2.0.15",
     "chalk": "^4.1.2",
     "axios": "^0.25.0",
-    "fetch-h2": "^3.0.2"
+    "fetch-h2": "^3.0.2",
     "express-rate-limit": "^6.4.0",
     "typescript": "^4.5.2"
   }
