@@ -52,20 +52,21 @@ app.get("/v1/forum", (req, res) => {
 
 app.get("/v1/forum/getposts", (req, res) => {
 const page = req.query.page != null && req.query.page != "" ? req.query.page : "1"
-axios.get(`${forum_url}/api/forum/disscussion?page=${page}`)
+axios.get(`${forum_url}/api/forum/disscussion?page=${page}`, 
+{ headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36' }  } )
 	.then((dota) => {
-	var data = dota.data
-  res.send({
-    ok: true,
-    pagination: {
-    	page: data.current_page,
-	posts_per_page: data.per_page
-    },
-    posts: data.data
+		var data = dota.data
+  		res.send({
+    			ok: true,
+    			pagination: {
+    				page: data.current_page,
+				posts_per_page: data.per_page
+    			},
+    			posts: data.data
 	  
     
-  });
-})
+  		});
+	})
 });
 
 
