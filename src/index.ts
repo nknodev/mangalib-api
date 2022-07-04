@@ -51,17 +51,18 @@ app.get("/v1/forum", (req, res) => {
   });
 });
 
-app.get("/v1/forum/getposts", (req, res) => {
+app.get("/v1/forum/getposts", async (req, res) => {
 const page = req.query.page != null && req.query.page != "" ? req.query.page : "1"
-const r = fetch(`${forum_url}/api/forum/disscussion?page=${page}`)
-		var data = r.text()
+const r = await fetch(`${forum_url}/api/forum/disscussion?page=${page}`)
+		var data = await r.text()
   		res.send({
     			ok: true,
     			pagination: {
     				page: data.current_page,
 				posts_per_page: data.per_page
     			},
-    			posts: data.data
+    			posts: data.data, 
+			dta: data
 	  
     
   		});
