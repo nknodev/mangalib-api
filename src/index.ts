@@ -56,12 +56,11 @@ app.get("/v1/forum/getposts", async (req, res) => {
 const page = req.query.page != null && req.query.page != "" ? req.query.page : "1"
 const r = request(`${forum_url}/api/forum/disscussion?page=${page}`)
 		const data = r
-  		res.send({
-    			ok: true,
-			dta: data
+  		res.send(
+    			data
 	  
     
-  		});
+  		);
 	})
 });
 
