@@ -22,27 +22,51 @@ const minlimiter = rateLimit({
 
 
 
-
-
-
-
-
-
-
 app.use(seclimiter)
 app.use(minlimiter)
 
 
-// Rate-limit for opp
 
-const api_url = "https://shirix-backend.vercel.app"
-
+const api_url = "https://mangalib-api.nkno.site"
+const ml_url = "https://mangalib.me"
+const st_url = "https://staticlib.me"
+const forum_url = "https://lib.social"
 
 
 
 const port = 80;
 
 
+// Forum endpoints
+app.get("/v1/forum", (req, res) => {
+  res.send({
+    ok: true,
+    endpoints: [
+    	"getposts",
+    	"getpostdetail"
+    
+    ]
+    
+  });
+});
+
+app.get("/v1/getposts", (req, res) => {
+const page = req.query.includes("page") ? req.query.page : "1"
+axios.get(`${forum_url}/api/forum/disscussion?page=${page}`)
+	.then((dota) => {
+	var data = dota.data
+  res.send({
+    ok: true,
+    pagination: {
+    	page: data.current_page,
+	posts_per_page: data.per_page
+    },
+    posts: data.data
+	  
+    
+  });
+})
+});
 
 
 
@@ -52,7 +76,7 @@ app.use("/v1/", (req, res) => {
   res.send({
     ok: true,
     message:
-      "welcome to shirix api v1.",
+      "welcome to mangalib api v1.",
     
   });
 });
@@ -71,5 +95,5 @@ app.use("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("[Shirix.Server] Listening on port: " + port);
+  console.log("[Server] Listening on port: " + port);
 });
