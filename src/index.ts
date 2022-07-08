@@ -68,7 +68,7 @@ const r = request(`${forum_url}/api/forum/disscussion?page=${page}`)
 
 
 app.get("/v1/getMangaInfo", (req, res) => {
-  const slug = req.query.slug != null && req.query.slug != "" ? req.query.slug
+  const slug = req.query.slug != null && req.query.slug != "" ? req.query.slug : ""
   axios.get(`https://${forum_url}/manga-short-info?slug=${slug}`)
   	.then((dota) => {
   res.send({
