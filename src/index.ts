@@ -78,7 +78,7 @@ app.get("/v1/getMangaInfo", (req, res) => {
     
   });
   })
-  	.catch((dota) => {res.status(502).send({ok: false, message: "Bad request"})})
+  	.catch((dota) => {res.status(502).send({ok: false, message: "Bad request", data: dota.data})})
 });
 
 
