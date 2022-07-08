@@ -51,7 +51,7 @@ app.get("/v1/forum", (req, res) => {
     
   });
 });
-
+/*
 app.get("/v1/forum/getposts", async (req, res) => {
 const page = req.query.page != null && req.query.page != "" ? req.query.page : "1"
 const r = request(`${forum_url}/api/forum/disscussion?page=${page}`)
@@ -62,14 +62,14 @@ const r = request(`${forum_url}/api/forum/disscussion?page=${page}`)
     
   		);
 	})
-});
+});*/
 
 
 
 
 app.get("/v1/getMangaInfo", (req, res) => {
   const slug = req.query.slug != null && req.query.slug != "" ? req.query.slug
-  axios.get(`https://lib.social/manga-short-info?slug=${slug}`)
+  axios.get(`https://${forum_url}/manga-short-info?slug=${slug}`)
   	.then((dota) => {
   res.send({
     ok: true,
