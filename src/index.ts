@@ -67,6 +67,21 @@ const r = request(`${forum_url}/api/forum/disscussion?page=${page}`)
 
 
 
+app.get("/v1/getMangaInfo", (req, res) => {
+  const slug = req.query.slug != null && req.query.slug != "" ? req.query.slug
+  axios.get(`https://lib.social/manga-short-info?slug=${slug}`)
+  	.then((dota) => {
+  res.send({
+    ok: true,
+    message: "ice, ice baby",
+    data: dota.data
+    
+  });
+  })
+  	.catch((dota) => {res.status(502).send({ok: false, message: "Bad request"})})
+});
+
+
 
 // Main endpoints
 app.use("/v1/", (req, res) => {
